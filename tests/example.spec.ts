@@ -115,7 +115,7 @@ test('Create article - it should be created', async ({ request }) => {
   //AAA
   //Arrange
   const authRequestBody = {
-    user:{email:"testuser@mail.com",password:"1234"}  
+    user:{email:"testuser2@mail.com",password:"1234"}  
 };
 
 const authResponse = await request.post('/api/users/login', { data: authRequestBody  
