@@ -85,7 +85,7 @@ test('login user- it should be logged', async ({ request }) => {
   //Arrange
   const requestBody = {
      
-      user:{email:"testuser@mail.com",password:"1234"}
+      user:{email:"testuser2@mail.com",password:"1234"}
         
   };
   //Act
