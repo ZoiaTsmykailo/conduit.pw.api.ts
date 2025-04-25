@@ -52,7 +52,7 @@ test('register user- it should be registered', async ({ request }) => {
   //Act
  const response = await request.post('/api/users', { 
   data: {
-    "user":{"email":"testuser2@mail.com","password":"1234","username":"testuser2"}}});
+    "user":{"email":"testuser5@mail.com","password":"1234","username":"testuser5"}}});
 
  const responseJson = await response.json();
  responseJson.user.token;
