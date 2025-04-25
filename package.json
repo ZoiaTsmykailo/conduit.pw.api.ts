@@ -1,0 +1,22 @@
+{
+  "name": "conduit.pw.api.ts",
+  "version": "1.0.0",
+  "description": "��#\u0000 \u0000c\u0000o\u0000n\u0000d\u0000u\u0000i\u0000t\u0000.\u0000p\u0000w\u0000.\u0000a\u0000p\u0000i\u0000.\u0000t\u0000s\u0000\r\u0000 \u0000",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZoiaTsmykailo/conduit.pw.api.ts.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ZoiaTsmykailo/conduit.pw.api.ts/issues"
+  },
+  "homepage": "https://github.com/ZoiaTsmykailo/conduit.pw.api.ts#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.52.0",
+    "@types/node": "^22.14.1"
+  }
+}
