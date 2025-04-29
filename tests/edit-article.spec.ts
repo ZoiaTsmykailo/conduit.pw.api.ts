@@ -3,8 +3,8 @@ import {expect} from '@playwright/test';
 import { Article } from "../controllers/Articles/ArticleType";
 import { ArticlesController } from "../controllers/Articles/ArticlesController";
 
-test.use({ authData: { email: process.env.EMAIL! , password: process.env.PASSWORD!} ,articleData:
-    
+test.use({ authData: { email: process.env.EMAIL! , password: process.env.PASSWORD!},
+    articleData:    
     {title:`Title edited`,
     description:'some description edited',
     body:`perfect body`,
@@ -44,10 +44,9 @@ test('Edit article - it should be edited', async ({ request, createdArticle }) =
    
     const response = await request.put(`/api/articles/${slug}`, {
         data: {
-        "article":{"slug":`${slug}`,
-        
+        "article":{"slug":`${slug}`}
         }
-    }});  
+    });  
     const responseUpdated = await request.get(`/api/articles/${slug}`);
     const responseJson = await responseUpdated.json();
     expect(responseJson.article.title).toBe('Title edited'); 
@@ -56,7 +55,3 @@ test('Edit article - it should be edited', async ({ request, createdArticle }) =
     const responseDelete = await request.delete(`/api/articles/${slug}`);
     expect(responseDelete.status()).toBe(204);
   });
-
-  
-
- 
