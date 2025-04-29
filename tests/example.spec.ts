@@ -19,14 +19,11 @@ test('request article - verify count more then one', async ({ request }) => {
 // /api/articles/demo-article-rjd94l
 
 test('request article - it should exist', async ({ request }) => {
-  //AAA
-  //Arrange
-
-  //Act
+  
  const response = await request.get('/api/articles/demo-article-rjd94l');
 
  const responseJson = await response.json();
- //Assert
+
  expect(responseJson.article.title).toBe('Demo Article');
  console.log(responseJson.article.title);
   
@@ -46,20 +43,16 @@ response example: {
 }
 */
 test('register user- it should be registered', async ({ request }) => {
-  //AAA
-  //Arrange
-
-  //Act
+  
  const response = await request.post('/api/users', { 
   data: {
-    "user":{"email":"testuser5@mail.com","password":"1234","username":"testuser5"}}});
+    "user":{"email":process.env.EMAIL, "password":process.env.PASSWORD,"username":process.env.USERNAME}}});
 
  const responseJson = await response.json();
  responseJson.user.token;
- //Assert
+ 
  expect(responseJson.user.token).toBeTruthy();
  expect(response.status()).toBe(200);
-// console.log(responseJson.user.token);
   
 });
 
@@ -81,23 +74,21 @@ body example: {
 */
 
 test('login user- it should be logged', async ({ request }) => {
-  //AAA
-  //Arrange
   const requestBody = {
      
-      user:{email:"testuser2@mail.com",password:"1234"}
+      user:{email:process.env.EMAIL, password:process.env.PASSWORD}
         
   };
-  //Act
+
  const response = await request.post('/api/users/login', { data: requestBody  
   });
 
  const responseJson = await response.json();
  responseJson.user.token;
- //Assert
+
  expect(responseJson.user.token).toBeTruthy();
  expect(response.status()).toBe(200);
- //console.log(responseJson.user.token);
+
   
 });
 
@@ -112,10 +103,8 @@ payload example: {"article":{"author":{},"title":"api article","description":"so
 
 
 test('Create article - it should be created', async ({ request }) => {
-  //AAA
-  //Arrange
   const authRequestBody = {
-    user:{email:"testuser4@mail.com",password:"1234"}  
+    user:{email:process.env.EMAIL, password:process.env.PASSWORD}  
 };
 
 const authResponse = await request.post('/api/users/login', { data: authRequestBody  

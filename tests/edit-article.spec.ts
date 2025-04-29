@@ -1,7 +1,7 @@
 import {test} from './request.fixture';
 import {expect} from '@playwright/test';
 
-test.use({authData:{email:"testuser2@mail.com", password: '1234'}, 
+test.use({authData:{email:process.env.EMAIL!, password: process.env.PASSWORD!}, 
     articleData:{
         title:"api article edited",
         description:"some description edited",
@@ -21,28 +21,41 @@ payload example: {"article":{"slug":"api-article-gm5lwr","title":"api article ed
 */
 
 test('Edit article - it should be edited', async ({ request, createdArticle }) => {
-    //AAA
-    //Arrange
     const slug = createdArticle.slug;
-    expect(slug).toBeTruthy();
-    console.log(slug)  
-    //Act
+   
     const response = await request.put(`/api/articles/${createdArticle.slug}`, {
         data: {
-        "article":{"slug":`${createdArticle.slug}`,
+        "article":{"slug":`${slug}`,
         
         }
     }});  
     const responseUpdated = await request.get(`/api/articles/${slug}`);
     const responseJson = await responseUpdated.json();
-    
+    expect(responseJson.article.title).toBe('api article edited'); 
+    expect(response.status()).toBe(200);
   
-   //Assert
-   expect(responseJson.article.title).toBe('api article edited'); 
-  expect(response.status()).toBe(200);
-  
-  const responseDelete = await request.delete(`/api/articles/${createdArticle.slug}`);
-  expect(responseDelete.status()).toBe(204);
+    const responseDelete = await request.delete(`/api/articles/${slug}`);
+    expect(responseDelete.status()).toBe(204);
   });
+
+  test('Update article -article should be updated', async ({request,createdArticle}) => {
+    const slug = createdArticle.slug;
+    const articleUpdate = {
+        article: {
+            title: 'New Title - updated',
+            description: 'update description',
+            body: 'update body',
+        }
+    };
+    const response = await request.put(`/api/articles/${createdArticle.slug}`, { data: articleUpdate });  
+    const responseUpdated = await request.get(`/api/articles/${slug}`);
+    const responseJson = await responseUpdated.json();
+    expect(responseJson.article.title).toBe('New Title - updated'); 
+    expect(response.status()).toBe(200);
+  
+    const responseDelete = await request.delete(`/api/articles/${slug}`);
+    expect(responseDelete.status()).toBe(204);
+
+  })
 
  
