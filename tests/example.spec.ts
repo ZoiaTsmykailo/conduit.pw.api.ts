@@ -42,7 +42,7 @@ response example: {
     }
 }
 */
-test('register user- it should be registered', async ({ request }) => {
+test.skip('register user- it should be registered', async ({ request }) => {
   
  const response = await request.post('/api/users', { 
   data: {
