@@ -1,7 +1,7 @@
 import {test} from './request.fixture';
 import {expect} from '@playwright/test';
 
-test.use({authData:{email:process.env.EMAIL, password: process.env.PASSWORD}, 
+test.use({authData:{email:process.env.EMAIL!, password: process.env.PASSWORD!}, 
     articleData:{
         title:"api article ",
         description:"some description ",

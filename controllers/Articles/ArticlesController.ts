@@ -1,11 +1,18 @@
 import { APIRequest, APIRequestContext } from "@playwright/test";
+import { Article } from "./ArticleType";
 
 export class ArticlesController {
    private request: APIRequestContext;
+   static baseUrl = "https://conduit-api.learnwebdriverio.com";
+
 
     constructor(request: APIRequestContext) {
         this.request = request;
     }
+    static printBaseUrl() {
+        console.log(this.baseUrl);
+      }
+
     async getArticles(offset:number, limit: number) {
         //pagination
         const response = await this.request.get(`/api/articles?offset=${offset}&limit=${limit}`);
@@ -15,13 +22,22 @@ export class ArticlesController {
         const response = await this.request.get(`https://conduit-api.learnwebdriverio.com/api/articles/${slug}`);
         return response;
     };
-    async updateArticle(slug: string, article:{
-        slug?:string,
-        title?:string,
-        description?:string,
-        body?:string,
-        tagList?:string[]}){
-        const response = await this.request.put(`https://conduit-api.learnwebdriverio.com/api/articles/${slug}`, {data:{article}});
+    async createArticle(articleBody: Article) {
+        const requestBody = {
+          article: articleBody,
+        };
+    
+        const response = await this.request.post("/api/articles", {
+          data: requestBody,
+        });
+    
+        return response;
+      }
+    async updateArticle(slug: string, articleBody:Article){
+        const requestBody = {
+            article: articleBody,
+          };
+        const response = await this.request.put(`/articles/${slug}`, {data:requestBody});
         return response;
     };
     async deleteArticle (slug: string) {
@@ -30,12 +46,12 @@ export class ArticlesController {
     };
     async  postComment(slug: string,newComment:string) {
         const comments = {"comment":{"body":`${newComment}`}}
-        const response = await this.request.post(`https://conduit-api.learnwebdriverio.com/api/articles/${slug}/comments`, {data:{comments}});
+        const response = await this.request.post(`/api/articles/${slug}/comments`, {data:{comments}});
         return response;
     };
     async getComment(slug: string,comment: string){
 
-        const response = await this.request.get(`https://conduit-api.learnwebdriverio.com/api/articles/${slug}/comments`, {data:{body:`${comment}`}});
+        const response = await this.request.get(`/api/articles/${slug}/comments`, {data:{body:`${comment}`}});
         return response;
     };
     async deleteComment(slug: string, comment: string){

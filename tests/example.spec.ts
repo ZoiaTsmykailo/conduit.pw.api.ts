@@ -46,7 +46,7 @@ test.skip('register user- it should be registered', async ({ request }) => {
   
  const response = await request.post('/api/users', { 
   data: {
-    "user":{"email":process.env.EMAIL, "password":process.env.PASSWORD,"username":process.env.USERNAME}}});
+    "user":{"email":process.env.EMAIL!, "password":process.env.PASSWORD!,"username":process.env.USERNAME!}}});
 
  const responseJson = await response.json();
  responseJson.user.token;
@@ -76,7 +76,7 @@ body example: {
 test('login user- it should be logged', async ({ request }) => {
   const requestBody = {
      
-      user:{email:process.env.EMAIL, password:process.env.PASSWORD}
+      user:{email:process.env.EMAIL!, password:process.env.PASSWORD!}
         
   };
 
@@ -104,7 +104,7 @@ payload example: {"article":{"author":{},"title":"api article","description":"so
 
 test('Create article - it should be created', async ({ request }) => {
   const authRequestBody = {
-    user:{email:process.env.EMAIL, password:process.env.PASSWORD}  
+    user:{email:process.env.EMAIL!, password:process.env.PASSWORD!}  
 };
 
 const authResponse = await request.post('/api/users/login', { data: authRequestBody  

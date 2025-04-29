@@ -1,7 +1,7 @@
 import {test} from './request.fixture';
 import {expect} from '@playwright/test';
 
-test.use({authData:{email:process.env.EMAIL, password: process.env.PASSWORD}});
+test.use({authData:{email:process.env.EMAIL!, password: process.env.PASSWORD!}});
 
 test('Create article - it should be created', async ({ request }) => {
   //AAA

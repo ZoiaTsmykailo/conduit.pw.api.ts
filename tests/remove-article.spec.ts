@@ -26,8 +26,8 @@ expect(response.status()).toBe(204);
 */
 test.use({
     authData: {
-      email: process.env.EMAIL,
-      password: process.env.PASSWORD
+      email: process.env.EMAIL!,
+      password: process.env.PASSWORD!
     },articleData:{
         title:"api article ",
         description:"some description ",

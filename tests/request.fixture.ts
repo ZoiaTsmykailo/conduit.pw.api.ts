@@ -30,8 +30,8 @@ export const test = base.extend<MyFixture>({
     request: async ({playwright, request, authData}, use ) => {
         const authRequestBody = {
             user:{
-                email: authData.email,
-                password: '1234'}  
+                email: process.env.EMAIL!,
+                password: process.env.PASSWORD!}  
         };
         
         const authResponse = await request.post('/api/users/login', { data: authRequestBody  
@@ -88,4 +88,6 @@ export const test = base.extend<MyFixture>({
       }
 
 });
+
+export {expect} from '@playwright/test';
  
