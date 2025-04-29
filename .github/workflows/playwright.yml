@@ -3,6 +3,11 @@ on:
   workflow_dispatch:
   schedule:
     - cron: "* 4 * * *"
+env:
+  EMAIL: ${{ vars.EMAIL }}
+  PASSWORD: ${{ vars.PASSWORD }}
+  USERNAME: ${{ vars.USERNAME }}
+
 jobs:
   test:
     timeout-minutes: 60
