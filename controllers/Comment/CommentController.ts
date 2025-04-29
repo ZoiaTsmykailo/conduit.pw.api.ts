@@ -24,8 +24,8 @@ export class ArticlesController {
 
         const idComment =  responseJson.comments.id;
 
-        const response = await this.request.delete(`https://conduit-api.learnwebdriverio.com/api/articles/${slug}/comments/${idComment}`);
+        const response = await this.request.delete(`/api/articles/${slug}/comments/${idComment}`);
 
         return response;
     };
-}
+};

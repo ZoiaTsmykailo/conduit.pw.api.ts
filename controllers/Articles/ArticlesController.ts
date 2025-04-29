@@ -19,7 +19,7 @@ export class ArticlesController {
         return response;
     };
     async getArticle(slug: string){
-        const response = await this.request.get(`https://conduit-api.learnwebdriverio.com/api/articles/${slug}`);
+        const response = await this.request.get(`/api/articles/${slug}`);
         return response;
     };
     async createArticle(articleBody: Article) {
@@ -60,8 +60,8 @@ export class ArticlesController {
 
         const idComment =  responseJson.comments.id;
 
-        const response = await this.request.delete(`https://conduit-api.learnwebdriverio.com/api/articles/${slug}/comments/${idComment}`);
+        const response = await this.request.delete(`/api/articles/${slug}/comments/${idComment}`);
 
         return response;
     };
-}
+};
