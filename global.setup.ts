@@ -8,9 +8,9 @@ export default async function globalSetup(config: FullConfig) {
 
   const userController = new UserController(apiContext);
 
-  // process.env.EMAIL = process.env.EMAIL?.trim();
-  // process.env.PASSWORD = process.env.PASSWORD?.trim();
-  // process.env.USERNAME = process.env.USERNAME?.trim();
+   process.env.EMAIL = process.env.EMAIL?.trim();
+   process.env.PASSWORD = process.env.PASSWORD?.trim();
+   process.env.USERNAME = process.env.USERNAME?.trim();
 
   try {
     const requestBody = {
