@@ -1,8 +1,6 @@
 name: Playwright Tests
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "* 4 * * *"
 env:
   EMAIL: ${{ vars.EMAIL }}
   PASSWORD: ${{ vars.PASSWORD }}
