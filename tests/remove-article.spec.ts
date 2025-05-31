@@ -1,5 +1,5 @@
-import {test} from './request.fixture';
-import {expect} from '@playwright/test';
+import { test } from "./request.fixture";
+import { expect } from "@playwright/test";
 /*
 Request URL:
 https://conduit-api.learnwebdriverio.com/api/articles/api-article-byfyv3
@@ -25,22 +25,23 @@ expect(response.status()).toBe(204);
 });
 */
 test.use({
-    authData: {
-      email: process.env.EMAIL!,
-      password: process.env.PASSWORD!
-    },articleData:{
-        title:"api article ",
-        description:"some description ",
-        body:"some body ",
-        tagList:["test","api"]
-    }
-    
-  });
-  
-  test('Delete article by slug', async ({ request, createdArticle }) => {
-    //Arrange
-    const slug = createdArticle.slug
-    console.log(slug)
-    const response = await request.delete(`/api/articles/${createdArticle.slug}`);
-    expect(response.status()).toBe(204);
-  });
+  authData: {
+    email: process.env.EMAIL!,
+    password: process.env.PASSWORD!,
+  },
+  articleData: {
+    title: "api article ",
+    description: "some description ",
+    body: "some body ",
+    tagList: ["test", "api"],
+  },
+});
+
+test("Delete article by slug", async ({ request, createdArticle }) => {
+  const slug = createdArticle.slug;
+  console.log(slug);
+  const response = await request.delete(`/api/articles/${slug}`);
+  expect(response.status()).toBe(204);
+  const deletedResponse = await request.get(`/api/articles/${slug}`);
+  expect(deletedResponse.status()).toBe(404);
+});

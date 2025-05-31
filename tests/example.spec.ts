@@ -1,32 +1,24 @@
-import { test, expect } from '@playwright/test';
-
+import { test, expect } from "@playwright/test";
 // /api/articles?offset=0&limit=10
 
-test('request article - verify count more then one', async ({ request }) => {
-  //AAA
-  //Arrange
+test("request article - verify count more then one", async ({ request }) => {
+  const response = await request.get("/api/articles?offset=0&limit=10");
 
-  //Act
- const response = await request.get('/api/articles?offset=0&limit=10');
+  const responseJson = await response.json();
 
- const responseJson = await response.json();
- //Assert
- expect(responseJson.articlesCount).toBeGreaterThan(1);
- console.log(responseJson.articlesCount);
-  
+  expect(responseJson.articlesCount).toBeGreaterThan(1);
+  console.log(responseJson.articlesCount);
 });
 
 // /api/articles/demo-article-rjd94l
 
-test('request article - it should exist', async ({ request }) => {
-  
- const response = await request.get('/api/articles/demo-article-rjd94l');
+test("request article - it should exist", async ({ request }) => {
+  const response = await request.get("/api/articles/demo-article-rjd94l");
 
- const responseJson = await response.json();
+  const responseJson = await response.json();
 
- expect(responseJson.article.title).toBe('Demo Article');
- console.log(responseJson.article.title);
-  
+  expect(responseJson.article.title).toBe("Demo Article");
+  console.log(responseJson.article.title);
 });
 /*
 Request URL: /api/users
@@ -42,18 +34,24 @@ response example: {
     }
 }
 */
-test.skip('register user- it should be registered', async ({ request }) => {
-  
- const response = await request.post('/api/users', { 
-  data: {
-    "user":{"email":process.env.EMAIL!, "password":process.env.PASSWORD!,"username":process.env.USERNAME!}}});
+test.skip("MQA-29042025 Register user- it should be registered", async ({
+  request,
+}) => {
+  const response = await request.post("/api/users", {
+    data: {
+      user: {
+        email: process.env.EMAIL!,
+        password: process.env.PASSWORD!,
+        username: process.env.USERNAME!,
+      },
+    },
+  });
 
- const responseJson = await response.json();
- responseJson.user.token;
- 
- expect(responseJson.user.token).toBeTruthy();
- expect(response.status()).toBe(200);
-  
+  const responseJson = await response.json();
+  responseJson.user.token;
+
+  expect(responseJson.user.token).toBeTruthy();
+  expect(response.status()).toBe(200);
 });
 
 /*
@@ -73,58 +71,58 @@ body example: {
 
 */
 
-test('login user- it should be logged', async ({ request }) => {
+test("MQA-29042025 login user- it should be logged", async ({ request }) => {
   const requestBody = {
-     
-      user:{email:process.env.EMAIL!, password:process.env.PASSWORD!}
-        
+    user: { email: process.env.EMAIL!, password: process.env.PASSWORD! },
   };
 
- const response = await request.post('/api/users/login', { data: requestBody  
+  const response = await request.post("/api/users/login", {
+    data: requestBody,
   });
 
- const responseJson = await response.json();
- responseJson.user.token;
+  const responseJson = await response.json();
+  responseJson.user.token;
 
- expect(responseJson.user.token).toBeTruthy();
- expect(response.status()).toBe(200);
-
-  
+  expect(responseJson.user.token).toBeTruthy();
+  expect(response.status()).toBe(200);
 });
 
-/*
-Request URL:
-https://conduit-api.learnwebdriverio.com/api/articles
-Request Method: POST
-Status Code: 200
-payload example: {"article":{"author":{},"title":"api article","description":"some description","body":"some body","tagList":["plawright","test","api"]}}
-
-*/
-
-
-test('Create article - it should be created', async ({ request }) => {
+test("MQA-29042025 Create article - it should be created", async ({
+  request,
+}) => {
   const authRequestBody = {
-    user:{email:process.env.EMAIL!, password:process.env.PASSWORD!}  
-};
+    user: { email: process.env.EMAIL!, password: process.env.PASSWORD! },
+  };
+  const authResponse = await request.post("/api/users/login", {
+    data: authRequestBody,
+  });
+  const authResponseJson = await authResponse.json();
+  const token = authResponseJson.user.token;
+  const requestBody = {
+    article: {
+      author: {},
+      title: "api article",
+      description: "some description",
+      body: "some body",
+      tagList: ["playwright", "test", "api"],
+    },
+  };
 
-const authResponse = await request.post('/api/users/login', { data: authRequestBody  
-});
-
-const authResponseJson = await authResponse.json();
-const token = authResponseJson.user.token;
-
-const requestBody = {"article":{"author":{},"title":"api article","description":"some description","body":"some body","tagList":["playwright","test","api"]}}  ;
-  //Act
- const response = await request.post('/api/articles', { 
-  data: requestBody , 
-  headers: {
-    authorization: "Token "+ token}
+  const response = await request.post("/api/articles", {
+    data: requestBody,
+    headers: {
+      authorization: "Token " + token,
+    },
   });
 
- const responseJson = await response.json();
- 
- //Assert
+  const responseJson = await response.json();
+  const slug = responseJson.article.slug;
 
- expect(response.status()).toBe(200);
-   
+  expect(response.status()).toBe(200);
+  const responseCline = await request.delete(`/api/articles/${slug}`, {
+    headers: {
+      authorization: "Token " + token,
+    },
+  });
+  expect(responseCline.status()).toBe(204);
 });

@@ -67,24 +67,27 @@ export const test = base.extend<MyFixture>({
         await use({ slug, title: `${uniqueTitle}` });
       },
 
-      updateArticle: async ({request}, use) => {
-        await use(async (slug: string, newTitle: string) => {
-            await request.put(`/api/articles/${slug}`, {
-                data: {
-                    article: {
-                        title: newTitle,
-                        description: 'update description',
-                        body: 'update body',
-                    },
-                },
-            });
-        });
+      updateArticle: async ({ request }, use) => {
+        const update = async (slug: string, newTitle: string) => {
+          await request.put(`/api/articles/${slug}`, {
+            data: {
+              article: {
+                title: newTitle,
+                description: 'update description',
+                body: 'update body',
+              },
+            },
+          });
+        };
+      
+        await use(update); 
       },
 
       deleteArticle: async ({request}, use) =>{
-        await use(async (slug: string) => {
+        const dlt = async (slug: string) => {
             await request.delete(`/api/articles/${slug}`);
-          });
+          };
+          await use(dlt);
       }
 
 });
